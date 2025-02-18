@@ -34,11 +34,6 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({
   setBackgroundVideo,
 }) => {
   const [videos, setVideos] = useState<Video[]>([]);
-  const [showcase, setShowcase] = useState<{
-    name: string;
-    link: string;
-    thumbnail: string;
-  } | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   useEffect(() => {
@@ -46,7 +41,6 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched videos:", data.videos);
-        setShowcase(data.showcase);
         setVideos(data.videos);
       })
       .catch((error) => console.error("Error fetching videos:", error));
