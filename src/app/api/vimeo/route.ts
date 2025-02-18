@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
 
 interface VimeoVideo {
-  id: string;
+  uri: string;
   name: string;
   link: string;
   duration: number;
   created_time: string;
   pictures: { base_link: string };
   files?: { link: string; quality: string }[];
+}
+
+interface VimeoAPIResponse {
+  data: VimeoVideo[];
 }
 
 export async function GET() {
@@ -22,16 +26,23 @@ export async function GET() {
       return NextResponse.json({ error: "Failed to fetch videos" }, { status: response.status });
     }
 
-    const data = await response.json();
-    
+    const data: VimeoAPIResponse = await response.json();
+
     if (!data || !data.data) {
       return NextResponse.json({ error: "Invalid response from Vimeo" }, { status: 500 });
     }
 
-    // Ensure all video objects match the VimeoVideo interface
-    const videos: VimeoVideo[] = data.data.map((video: any) => ({
-      id: video.uri.split("/").pop(),
-      name: video.name.split(/\s*[-–]\s*/)[0], // Extract text before the first dash
+    const videos = data.data.map((video): {
+      id: string;
+      name: string;
+      link: string;
+      duration: number;
+      created_time: string;
+      pictures: { base_link: string };
+      files: { link: string; quality: string }[];
+    } => ({
+      id: video.uri.split("/").pop() || "", 
+      name: video.name.split(/\s*[-–]\s*/)[0], 
       link: video.link,
       duration: video.duration,
       created_time: video.created_time,
@@ -45,6 +56,3 @@ export async function GET() {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
-
-
-          
