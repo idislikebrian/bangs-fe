@@ -10,7 +10,6 @@
     padding: 20px;
 }
 
-/* Sentence-style Video List */
 .videoSentence {
     position: relative;
     z-index: 2;
@@ -18,17 +17,17 @@
     text-align: center;
     max-width: 80%;
     line-height: 1.5;
-    white-space: normal; /* Ensures text wraps naturally */
+    white-space: normal;
     word-break: break-word;
 }
 
 .videoTitle {
-    display: inline; /* Makes the text flow inline */
+    display: inline; 
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease-in-out;
 }
 
 .videoTitle:hover {
-    color: #ffcc00; /* Change color on hover */
-    transform: scale(1.2);
+    font-size: 1.1em;
+    color: #ffcc00;
 }

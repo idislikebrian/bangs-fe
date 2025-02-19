@@ -5,17 +5,16 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
   
-  /* Modal Content */
 .modalContent {
     position: relative;
-    background: rgba(0, 0, 0, 0.8);
+    background: none /* #111111 */;
     padding: 20px;
     border-radius: 8px;
     max-width: 80vw;
@@ -25,19 +24,19 @@
     align-items: center;
 }
   
-  /* Close Button */
 .closeButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
+    top: -25px;
+    right: -25px;
+    padding: 10px 15px;
+    border-radius: 32px;
+    background: red;
     border: none;
     font-size: 24px;
     color: white;
     cursor: pointer;
 }
   
-  /* Vimeo Player */
 .vimeoPlayer {
     width: 80vw;
     height: 45vw;
