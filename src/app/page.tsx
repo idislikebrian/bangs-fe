@@ -1,7 +1,7 @@
 'use client'
 import styles from "./page.module.css";
 import ProjectGallery from "@/app/components/ProjectGallery";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Home() {
   const [hoverVideo, setHoverVideo] = useState<string | null>(null);
