@@ -21,9 +21,10 @@ interface ProjectGalleryProps {
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  
+  {/* const [isHovered, setIsHovered] = useState(false);
   const hoverDelay = 500;
-  const hoverQueue = useRef<NodeJS.Timeout[]>([]);
+  const hoverQueue = useRef<NodeJS.Timeout[]>([]); */}
 
   useEffect(() => {
     console.log("Fetching videos from /api/vimeo...");
