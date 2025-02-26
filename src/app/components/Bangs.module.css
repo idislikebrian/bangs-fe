@@ -1,0 +1,10 @@
+.navChange {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+    z-index: 900;
+    font-size: 2em;
+}

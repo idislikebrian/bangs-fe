@@ -1,28 +1,16 @@
-'use client'
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
 import styles from "./ProjectGallery.module.css";
-
 import Project from "./Project";
 
 interface VideoFile {
-  quality: string;
-  codec: string;
-  width: number;
-  height: number;
-  fps: number;
-  size: number;
   link: string;
-  expires: string;
 }
 
 interface Video {
   id: string;
   name: string;
-  description: string;
-  link: string;
-  duration: number;
-  created_time: string;
-  thumbnail: string;
   files: VideoFile[];
 }
 
@@ -30,83 +18,77 @@ interface ProjectGalleryProps {
   setBackgroundVideo: (videoUrl: string | null) => void;
 }
 
-const ProjectGallery: React.FC<ProjectGalleryProps> = ({
-  setBackgroundVideo,
-}) => {
+const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const hoverDelay = 500;
+  const hoverQueue = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
+    console.log("Fetching videos from /api/vimeo...");
+  
     fetch("/api/vimeo")
       .then((response) => response.json())
       .then((data) => {
-        setVideos(data.videos);
+        // console.log("API response:", data);
+  
+        if (!Array.isArray(data)) {
+          console.error("Error: Expected an array but got:", data);
+          return;
+        }
+  
+        console.log("Videos fetched successfully:", data);
+        setVideos(data); // Directly set the array since there's no 'videos' key
       })
       .catch((error) => console.error("Error fetching videos:", error));
   }, []);
 
-  useEffect(() => {
-    if (videos.length === 0) {
-      console.log("No videos found.");
-    }
-  }, [videos]);
+  const handleMouseEnter = (videoUrl: string | null) => {
+    // console.log("Mouse entered video title. Video URL:", videoUrl);
+    setBackgroundVideo(videoUrl);
+  };
 
-  useEffect(() => {
-    if (videos.length === 0 || isHovered) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % videos.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [videos, isHovered]);
-
-  useEffect(() => {
-    if (videos.length > 0 && !isHovered) {
-      const videoUrl = videos[currentIndex].files[0]?.link || null;
-      console.log(videoUrl)
-      setBackgroundVideo(videoUrl ? `${videoUrl}` : null);
-    }
-  }, [currentIndex, videos, isHovered, setBackgroundVideo]);
+  const handleMouseLeave = () => {
+    // console.log("Mouse left video title.");
+    setBackgroundVideo(null);
+  };
 
   const openModal = (video: Video) => {
+    // console.log("Opening modal for video:", video);
     setSelectedVideo(video);
   };
 
   const closeModal = () => {
+    // console.log("Closing modal.");
     setSelectedVideo(null);
   };
 
   return (
     <div className={styles.root}>
-      {/* Sentence-style Video List */}
       <div className={styles.videoSentence}>
         {videos.map((video, index) => {
           const videoUrl = video.files[0]?.link || null;
+          console.log(`Rendering video: ${video.name}, URL: ${videoUrl}`);
 
           return (
-            <span
+            <motion.span
               key={video.id}
               className={styles.videoTitle}
-              onMouseEnter={() => {
-                setBackgroundVideo(videoUrl ? `${videoUrl}#t=5s` : null);
-                setIsHovered(true);
-              }}
-              onMouseLeave={() => {
-                setIsHovered(false);
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              onMouseEnter={() => handleMouseEnter(videoUrl)}
+              onMouseLeave={handleMouseLeave}
               onClick={() => openModal(video)}
             >
               {video.name}
               {index !== videos.length - 1 ? " " : ""}
-            </span>
+            </motion.span>
           );
         })}
       </div>
 
-      {/* Project Modal (Video Player) */}
       {selectedVideo && <Project video={selectedVideo} onClose={closeModal} />}
     </div>
   );

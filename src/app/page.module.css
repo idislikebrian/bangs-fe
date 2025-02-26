@@ -6,7 +6,7 @@
   scroll-behavior: smooth;
 }
 
-.main, .about {
+.main, .tag, .about {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -16,24 +16,28 @@
   scroll-snap-align: start;
 }
 
-.about {
+.main {
+  position: relative; 
+  z-index: 1;
+}
+
+.tag {
   background: blue;
   color: yellow;
+  font-size: 50px;
+  padding: 20px;
+  z-index: 2; 
+  position: relative;
 }
 
-.page {
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font);
-  max-height: 100vh;
+.about {
+  background: red;
+  color: white;
+  padding: 20px;
+  z-index: 3;
+  position: relative; 
 }
 
-/* Add these styles to your CSS file */
 .videoBackground {
   position: fixed;
   top: 0;
@@ -41,46 +45,63 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: -3; /* Base z-index for the video container */
+  z-index: -3;
 }
 
 .staticBackgroundVideo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -3; /* Ensure the static video is always at the back */
+  z-index: -3;
 }
 
 .hoverBackgroundVideo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2; /* Hover video appears above the static video */
+  z-index: -2; 
 }
 
 .logo {
-  font-size: 10em;
+  font-size: 15em;
+  font-family: var(--bangs-playfair);
   text-align: center;
   width: 100%;
   max-width: 100vw;
   overflow: hidden;
   white-space: nowrap;
+  position: fixed; /* Make the logo fixed */
+  top: 20%; /* Adjust the top position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.clients {
+  position: relative;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4; 
+  font-size: 40px;
+}
+
+.contact {
+  position: relative;
+  bottom: -100px;
 }
 
 .footer {
   grid-row-start: 3;
   display: flex;
   gap: 24px;
-}
-
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer img {
-  flex-shrink: 0;
 }
 
 /* Enable hover only on non-touch devices */
@@ -103,6 +124,11 @@
 
   .logo {
     font-size: 5em;
+  }
+
+  .clients {
+    top: 40%;
+    margin: 0px;
   }
 
   .footer {

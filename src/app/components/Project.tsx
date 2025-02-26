@@ -30,7 +30,7 @@ const Project: React.FC<ProjectProps> = ({ video, onClose }) => {
       }
     };
     window.addEventListener("message", messageHandler);
-    
+
     return () => {
       window.removeEventListener("message", messageHandler);
     };
@@ -41,13 +41,12 @@ const Project: React.FC<ProjectProps> = ({ video, onClose }) => {
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <iframe
           ref={iframeRef}
-          src={`https://player.vimeo.com/video/${video.id}?autoplay=1&muted=0&title=0&byline=0&portrait=0&controls=0&transparent=1&loop=0&api=1&player_id=vimeo-player`}
+          src={`https://player.vimeo.com/video/${video.id}?autoplay=1&muted=0&title=0&byline=0&portrait=0&transparent=1&loop=0&api=1&player_id=vimeo-player`}
           frameBorder="0"
           allow="autoplay; fullscreen"
           allowFullScreen
           className={styles.vimeoPlayer}
         ></iframe>
-        <button className={styles.closeButton} onClick={onClose}>✕</button>
       </div>
     </div>
   );

@@ -1,46 +1,29 @@
-/* Modal Background */
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.3);
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 1000; 
 }
-  
+
 .modalContent {
     position: relative;
-    background: none /* #111111 */;
-    padding: 20px;
-    border-radius: 8px;
+    background: none;
     max-width: 80vw;
     max-height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-  
-.closeButton {
-    position: absolute;
-    top: -25px;
-    right: -25px;
-    padding: 10px 15px;
-    border-radius: 32px;
-    background: red;
-    border: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-}
-  
+
 .vimeoPlayer {
     width: 80vw;
     height: 45vw;
     max-width: 960px;
     max-height: 540px;
 }
-  
