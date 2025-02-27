@@ -21,7 +21,6 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
   const videoARef = useRef<HTMLVideoElement | null>(null);
   const videoBRef = useRef<HTMLVideoElement | null>(null);
 
-  // Fetch videos from API
   useEffect(() => {
     fetch(`/api/vimeo?albumId=${albumId}`)
       .then((response) => response.json())
@@ -45,11 +44,9 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
       .catch((error) => console.error("Error fetching videos:", error));
   }, [albumId]);
 
-  // Setup initial videos when loaded
   useEffect(() => {
     if (videos.length === 0) return;
     
-    // Set initial video sources
     if (videoARef.current) {
       videoARef.current.src = videos[currentIndex].link;
       videoARef.current.load();
@@ -62,26 +59,20 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
     }
   }, [videos]);
 
-  // Handle video transitions
   useEffect(() => {
     if (videos.length <= 1) return;
     
     const interval = setInterval(() => {
-      // Get next video index
       const newNextIndex = (nextIndex + 1) % videos.length;
       
-      // Start by loading next video into inactive element
       const inactiveVideoRef = isVideoAActive ? videoBRef : videoARef;
       if (inactiveVideoRef.current) {
         inactiveVideoRef.current.src = videos[nextIndex].link;
         inactiveVideoRef.current.load();
         
-        // Play inactive video then make it active
         inactiveVideoRef.current.play()
           .then(() => {
-            // Toggle active state
             setIsVideoAActive(!isVideoAActive);
-            // Update indices
             setCurrentIndex(nextIndex);
             setNextIndex(newNextIndex);
           })
@@ -92,7 +83,6 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
     return () => clearInterval(interval);
   }, [videos, isVideoAActive, currentIndex, nextIndex, displayDuration]);
 
-  // If no videos are loaded, return empty container
   if (videos.length === 0) {
     return <div className={styles.videoContainer} />;
   }

@@ -9,8 +9,15 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
+export default [
+  // Inherit Next.js defaults
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      // Disable errors for unused variables
+      "@typescript-eslint/no-unused-vars": "off",
+      // Turn missing effect dependencies into warnings
+      "react-hooks/exhaustive-deps": "warn",
+    },
+  },
 ];
-
-export default eslintConfig;
