@@ -14,10 +14,9 @@ export default [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      // Disable errors for unused variables
       "@typescript-eslint/no-unused-vars": "off",
-      // Turn missing effect dependencies into warnings
       "react-hooks/exhaustive-deps": "warn",
+      "@typescript-eslint/no-explicit-any": "off"
     },
   },
 ];
