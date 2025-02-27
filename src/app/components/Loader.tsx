@@ -11,7 +11,6 @@ const Loader: React.FC<LoaderProps> = ({ duration }) => {
   
   const [timeLeft, setTimeLeft] = useState(duration); 
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeLeft((prevTime) => {
@@ -32,7 +31,6 @@ const Loader: React.FC<LoaderProps> = ({ duration }) => {
     const ms = milliseconds % 1000;
     return `${String(seconds).padStart(2, '0')}:${String(ms).padStart(3, '0')}`;
   };
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   return (
     <motion.div
