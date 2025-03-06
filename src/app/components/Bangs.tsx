@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Bangs.module.css";
+import Image from "next/image";
 
 const Bangs: React.FC = () => {
   const scrollToMain = () => {
@@ -11,7 +12,7 @@ const Bangs: React.FC = () => {
 
   return (
     <div className={styles.navChange} onClick={scrollToMain}>
-      <img src="/bang.gif" width={48} height={48} alt="Scroll to main" />
+      <Image src="/bang.gif" width={48} height={48} alt="Scroll to main" />
     </div>
   );
 };

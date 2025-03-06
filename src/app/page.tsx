@@ -7,6 +7,7 @@ import Bangs from "./components/Bangs";
 import VideoBackground from "./components/VideoBackground";
 import Loader from "@/app/components/Loader";
 import About from "./components/About";
+import Image from "next/image";
 
 export default function Home() {
   const [hoverVideo, setHoverVideo] = useState<string | null>(null);
@@ -91,7 +92,7 @@ export default function Home() {
 
       <section className={styles.third} id="third">
         <div className={styles.thirdJuice} onClick={handleEmail}>
-              <span className={styles.link}>CLICK<img src="/bang.gif" width={48} height={48}  />HERE</span>
+              <span className={styles.link}>CLICK<Image src="/bang.gif" width={48} height={48} alt="Contact Barry via Email" />HERE</span>
             <br />
             LETS START PUTTING
             <br />
