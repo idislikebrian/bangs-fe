@@ -1,29 +1,29 @@
 .videoContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: black;
-    z-index: -1;
-  }
-  
-  .videoElement {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .active {
-    z-index: 1;
-    opacity: 1;
-  }
-  
-  .inactive {
-    z-index: 0;
-    opacity: 0;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: none;
+  z-index: -3;
+}
+
+.videoElement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.active {
+  z-index: 1;
+  opacity: 1;
+}
+
+.inactive {
+  z-index: 0;
+  opacity: 0;
+}

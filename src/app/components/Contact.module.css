@@ -1,8 +1,16 @@
 .contact {
     position: absolute;
+    display: flex;
+    gap: 20px;
     top: 10px;
     right: 20px;
     cursor: pointer;
     z-index: 900;
-    font-size: 2em;
+    font-size: 36px;
+}
+
+@media (max-width: 600px) {
+    .contact {
+        top: 100px;
+    }
 }

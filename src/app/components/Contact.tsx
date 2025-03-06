@@ -1,19 +1,27 @@
-import React from 'react';
-import styles from './Contact.module.css';
+import React from "react";
+import Link from 'next/link';
+import styles from "./Contact.module.css";
 
-const Contact: React.FC = () => {
-    const handleClick = () => {
-        const email = 'B@barrybangs.com';
-        const subject = encodeURIComponent('Sup Bangs');
-        const body = encodeURIComponent('Can we collaborate on a commercial soon?');
-        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-    };
+interface ContactProps {
+  onAboutClick: () => void;
+}
 
-    return (
-        <div className={styles.contact} onClick={handleClick}>
-            Contact
-        </div>
-    );
+const Contact: React.FC<ContactProps> = ({ onAboutClick }) => {
+  const handleEmail = () => {
+    const email = "B@barrybangs.com";
+    const subject = encodeURIComponent("Sup Bangs");
+    const body = encodeURIComponent("Can we collaborate on a commercial soon?");
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  };
+
+  return (
+    <>
+      <div className={styles.contact}>
+        <div onClick={handleEmail}>📧</div>
+        <div onClick={onAboutClick}>👤</div>
+      </div>
+    </>
+  );
 };
 
 export default Contact;

@@ -4,9 +4,13 @@
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   scroll-behavior: smooth;
+
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 24px;
 }
 
-.main, .tag, .about {
+.main, .tag, .third {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -17,25 +21,47 @@
 }
 
 .main {
-  position: relative; 
   z-index: 1;
 }
 
-.tag {
-  background: blue;
+.logo {
+  font-size: 15em;
+  font-family: var(--futura);
+  font-weight: var(--heavy);
+  text-align: center;
+  width: 100%;
+  max-width: 100vw;
+  white-space: nowrap;
   color: yellow;
-  font-size: 50px;
+  margin-top: 0.4em;
+}
+
+.clients {
+  height: 100%;
+  width: 100%;
+}
+
+.tag, .third {
+  font-family: var(--futura-bold);
+  font-size: 3em;
+  line-height: 1em;
+  text-align: center;
+}
+
+.tag {
   padding: 20px;
   z-index: 2; 
   position: relative;
 }
 
-.about {
-  background: red;
-  color: white;
+.third {
   padding: 20px;
   z-index: 3;
   position: relative; 
+}
+
+.third a {
+  color: yellow;
 }
 
 .videoBackground {
@@ -45,52 +71,37 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: -3;
-}
-
-.staticBackgroundVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -3;
+  z-index: -1;
 }
 
 .hoverBackgroundVideo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2; 
+  z-index: 0; 
 }
 
-.logo {
-  font-size: 15em;
-  font-family: var(--bangs-playfair);
-  text-align: center;
-  width: 100%;
-  max-width: 100vw;
-  overflow: hidden;
-  white-space: nowrap;
-  position: fixed; /* Make the logo fixed */
-  top: 20%; /* Adjust the top position as needed */
-  left: 50%;
-  transform: translateX(-50%);
+.tagJuice, .thirdJuice {
+  justify-content: space-between;
+  max-width: 70vw;
 }
 
-.clients {
+.arrowHome {
+  display: flex;
+  flex-direction: column;
   position: relative;
-  top: 50%;
-  height: 100%;
-  width: 100%;
-  max-width: 1300px;
+  z-index: 4; 
+  font-size: 40px;
+  bottom: 0;
 }
 
 .arrow {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
   z-index: 4; 
   font-size: 40px;
+  bottom: -25vh;
 }
 
 .contact {
@@ -98,10 +109,13 @@
   bottom: -100px;
 }
 
-.footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
+.mobileMenu {
+  display: none;
+}
+
+.link {
+  cursor: pointer;
+  color: yellow;
 }
 
 /* Enable hover only on non-touch devices */
@@ -118,22 +132,36 @@
     padding-bottom: 80px;
   }
 
+  .mobileMenu {
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 100vw;
+    background-color: #3526E3;
+    height: 70px;
+    z-index: 1000;
+  }
+
   .main {
     align-items: center;
   }
 
   .logo {
-    font-size: 5em;
+    font-size: 4.5em;
+    margin-top: 190px;
   }
 
-  .clients {
-    top: 40%;
-    margin: 0px;
+  .tag, .third {
+    
+    font-size: /*2em*/ 1.7224em;
+    text-align: left;
   }
 
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+  .arrowHome {
+    bottom: 0vh;
+  }
+
+  .arrow {
+    bottom: -20vh;
   }
 }

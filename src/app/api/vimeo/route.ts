@@ -21,6 +21,24 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const albumId = searchParams.get("albumId") || portfolio; // Use query param or default
 
+/*     const albumsEndpoint = `https://api.vimeo.com/users/1887246/albums`;
+    const albumsResponse = await fetch(albumsEndpoint, {
+      headers: {
+        Authorization: `Bearer ${process.env.VIMEO_ACCESS_TOKEN}`,
+      },
+    });
+
+    if (!albumsResponse.ok) {
+      console.error("Failed to fetch albums");
+    } else {
+      const albumsData: VimeoAPIResponse = await albumsResponse.json();
+      const albumDetails = albumsData.data.map(album => ({
+        id: album.uri.split('/').pop() || 'Unknown ID',
+        name: album.name
+      }));
+      console.log("Album Details:", albumDetails);
+    } */
+
     const endpoint = albumId
       ? `https://api.vimeo.com/users/1887246/albums/${albumId}/videos?sort=default`
       : `https://api.vimeo.com/users/1887246/albums`; // Fetch all collections if no albumId
@@ -51,7 +69,7 @@ export async function GET(request: Request) {
       files: { link: string; quality: string }[];
     } => ({
       id: video.uri.split("/").pop() || "", 
-      name: video.name.split(/\s*[-–/]\s*/)[0], 
+      name: video.name.split('/')[0], 
       link: video.link,
       duration: video.duration,
       created_time: video.created_time,

@@ -11,12 +11,12 @@
 }
 
 .videoSentence {
-    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     z-index: 2;
     font-size: 24px;
     text-align: center;
-    max-width: 65%;
-    line-height: 1.5;
+    line-height: 1.3;
     white-space: normal;
     word-break: break-word;
     margin-top: 20px;
@@ -26,10 +26,21 @@
     display: inline; 
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    text-transform: lowercase;
+    text-transform: uppercase;
+    padding: 5px;
+    text-shadow: 0px 1px 36px rgba(0, 0, 0, 0.27);
 }
 
 .videoTitle:hover {
-    font-size: 1.1em;
-    color: #ffcc00;
+    color: yellow;
 }
+
+@media (max-width: 600px) {
+    .videoSentence {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .videoTitle {
+        font-size: 0.8em;
+    }
+  }
