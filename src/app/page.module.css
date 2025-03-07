@@ -28,12 +28,13 @@
   font-size: 15em;
   font-family: var(--futura);
   font-weight: var(--heavy);
+  line-height: 1em;
   text-align: center;
   width: 100%;
   max-width: 100vw;
   white-space: nowrap;
   color: yellow;
-  margin-top: 0.4em;
+  margin-top: 0.25em;
 }
 
 .clients {
@@ -58,6 +59,7 @@
   padding: 20px;
   z-index: 3;
   position: relative; 
+  margin-bottom: 0;
 }
 
 .third a {
@@ -118,14 +120,6 @@
   color: yellow;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-
 @media (max-width: 600px) {
   .page {
     padding: 32px;
@@ -138,7 +132,7 @@
     top: 0px;
     width: 100vw;
     background-color: #3526E3;
-    height: 70px;
+    height: 10px;
     z-index: 1000;
   }
 
@@ -152,16 +146,93 @@
   }
 
   .tag, .third {
-    
-    font-size: /*2em*/ 1.7224em;
+    font-size: 1.7224em;
     text-align: left;
   }
 
   .arrowHome {
-    bottom: 0vh;
+    bottom: 10vh;
   }
 
   .arrow {
-    bottom: -20vh;
+    bottom: -2.5em;
+  }
+}
+
+@media (max-height: 600px) and (min-width: 600px) {
+  .page {
+    padding: 24px;
+    padding-bottom: 60px;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 100vw;
+    background-color: #3526E3;
+    height: 10px;
+    z-index: 1000;
+  }
+
+  .main {
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 6em;
+    margin-top: 75px;
+  }
+
+  .tag, .third {
+    font-size: 1.5em;
+    text-align: left;
+  }
+
+  .arrowHome {
+    bottom: 10vh;
+  }
+
+  .arrow {
+    bottom: -15vh;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1250px) {
+  .page {
+    padding: 40px;
+    padding-bottom: 80px;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 100vw;
+    background-color: #3526E3;
+    height: 10px;
+    z-index: 0;
+  }
+
+  .main {
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 7em;
+    margin-top: 100px;
+  }
+
+  .tag, .third {
+    font-size: 2em;
+    text-align: center;
+  }
+
+  .arrowHome {
+    bottom: 15vh;
+  }
+
+  .arrow {
+    bottom: -15vh;
   }
 }

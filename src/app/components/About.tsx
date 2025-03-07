@@ -22,10 +22,16 @@ const About = ({ isVisible }: { isVisible: boolean }) => {
     <motion.div
       id="about"
       className={styles.container}
-      initial={{ y: "-100vh" }} // Start off-screen
-      animate={{ y: isVisible ? 0 : "-100vh" }} 
-      transition={{ type: "spring", stiffness: 50 }}
-      style={{ position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh" }}
+      initial={{ y: "100vh" }}
+      animate={{ y: isVisible ? 0 : "100vh" }} 
+      transition={{ type: "spring", stiffness: 30 }}
+      style={{ 
+        position: "absolute", 
+        left: 0, 
+        width: "100vw", 
+        height: "100vh",
+        overflow: "hidden",
+     }}
     >
       <div className={styles.mobileMenu}></div>
 
@@ -34,7 +40,7 @@ const About = ({ isVisible }: { isVisible: boolean }) => {
           <center>
             {albumVideo && (
               <div className={styles.videoContainer}>
-                <video autoPlay muted loop className={styles.mainVideo}>
+                <video autoPlay muted loop playsInline className={styles.mainVideo}>
                   <source src={albumVideo} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>

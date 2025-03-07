@@ -43,4 +43,31 @@
     .videoTitle {
         font-size: 0.8em;
     }
-  }
+}
+
+@media (max-height: 600px) and (min-width: 600px) {
+    .videoSentence {
+        margin-top: 0px;
+    }
+    .videoTitle {
+        font-size: 0.5em;
+    }
+}
+  
+
+@media (min-width: 600px) and (max-width: 1250px) {
+    .videoSentence {
+        margin-top: 0px;
+    }
+    .videoTitle {
+        font-size: 0.5em;
+    }
+}
+  
+/* Disable hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .videoTitle:hover {
+        color: inherit; /* Reset to default color */
+    }
+}
+

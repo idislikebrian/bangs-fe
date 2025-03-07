@@ -4,17 +4,14 @@ import styles from "./VideoBackground.module.css";
 
 interface VideoFile {
   link: string;
+  duration: number;
 }
 
 interface VideoBackgroundProps {
   albumId: string;
-  displayDuration?: number; // Duration in milliseconds
 }
 
-const VideoBackground: React.FC<VideoBackgroundProps> = ({ 
-  albumId,
-  displayDuration = 5000 // Default to 5 seconds 
-}) => {
+const VideoBackground: React.FC<VideoBackgroundProps> = ({ albumId }) => {
   const [videos, setVideos] = useState<VideoFile[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
@@ -33,7 +30,7 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
               video.files?.find((file: any) => file.quality === "720p") ||
               video.files?.[0];
 
-            return { link: bestFile?.link };
+            return { link: bestFile?.link, duration: video.duration };
           }).filter(video => video.link);
 
           if (formattedVideos.length > 0) {
@@ -63,14 +60,24 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
   useEffect(() => {
     if (videos.length <= 1) return;
     
-    const interval = setInterval(() => {
+    const currentVideoDuration = videos[currentIndex].duration * 1000; // Convert to milliseconds
+    const preloadTime = currentVideoDuration - 5000; // Preload 5 seconds before the video ends
+
+    const preloadTimeout = setTimeout(() => {
       const newNextIndex = (nextIndex + 1) % videos.length;
       
       const inactiveVideoRef = isVideoAActive ? videoBRef : videoARef;
       if (inactiveVideoRef.current) {
         inactiveVideoRef.current.src = videos[nextIndex].link;
         inactiveVideoRef.current.load();
-        
+      }
+    }, preloadTime);
+
+    const switchTimeout = setTimeout(() => {
+      const newNextIndex = (nextIndex + 1) % videos.length;
+      
+      const inactiveVideoRef = isVideoAActive ? videoBRef : videoARef;
+      if (inactiveVideoRef.current) {
         inactiveVideoRef.current.play()
           .then(() => {
             setIsVideoAActive(!isVideoAActive);
@@ -79,10 +86,13 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({
           })
           .catch(err => console.error("Error playing next video:", err));
       }
-    }, displayDuration);
-    
-    return () => clearInterval(interval);
-  }, [videos, isVideoAActive, currentIndex, nextIndex, displayDuration]);
+    }, currentVideoDuration);
+
+    return () => {
+      clearTimeout(preloadTimeout);
+      clearTimeout(switchTimeout);
+    };
+  }, [videos, isVideoAActive, currentIndex, nextIndex]);
 
   if (videos.length === 0) {
     return <div className={styles.videoContainer} />;

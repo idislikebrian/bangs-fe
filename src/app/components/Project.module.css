@@ -27,3 +27,23 @@
     max-width: 960px;
     max-height: 540px;
 }
+
+@media (max-width: 600px) {
+    .modalOverlay {
+        background: none;
+    }
+
+    .vimeoPlayer {
+        display: none;
+    }
+}
+
+@media (max-height: 600px) and (min-width: 600px) {
+    .modalOverlay {
+        background: none;
+    }
+
+    .vimeoPlayer {
+        display: none;
+    }
+}

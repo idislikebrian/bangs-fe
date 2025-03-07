@@ -11,6 +11,12 @@
 
 @media (max-width: 600px) {
     .navChange {
-        top: 100px;
+        top: 25px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1250px) {
+    .navChange {
+        top: 25px;
     }
 }

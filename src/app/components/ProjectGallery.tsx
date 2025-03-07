@@ -18,14 +18,14 @@ interface ProjectGalleryProps {
   setBackgroundVideo: (videoUrl: string | null) => void;
 }
 
+const isMobile = () => {
+  return /Mobi|Android/i.test(navigator.userAgent);
+};
+
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   
-  const [isHovered, setIsHovered] = useState(false);
-  const hoverDelay = 500;
-  const hoverQueue = useRef<NodeJS.Timeout[]>([]);
-
   useEffect(() => {  
     fetch("/api/vimeo")
       .then((response) => response.json())
@@ -55,6 +55,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
 
   const closeModal = () => {
     setSelectedVideo(null);
+    setBackgroundVideo(null);
   };
 
   return (

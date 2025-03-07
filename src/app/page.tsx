@@ -29,7 +29,7 @@ export default function Home() {
       <Loader duration={3000} />
 
       <Contact onAboutClick={handleAboutClick} />
-      <Bangs />
+      <Bangs isAboutVisible={isAboutVisible} handleAboutClick={handleAboutClick} />
       <div className={styles.mobileMenu}></div>
 
       {hoverVideo && (
