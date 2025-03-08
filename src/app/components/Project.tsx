@@ -43,7 +43,7 @@ const Project: React.FC<ProjectProps> = ({ video, onClose }) => {
           ref={iframeRef}
           src={`https://player.vimeo.com/video/${video.id}?autoplay=1&muted=0&title=0&byline=0&portrait=0&transparent=1&loop=0&api=1&player_id=vimeo-player`}
           frameBorder="0"
-          allow="autoplay; encrypted-media"
+          allow="autoplay; fullscreen"
           allowFullScreen
           className={styles.vimeoPlayer}
         ></iframe>

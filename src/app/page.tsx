@@ -1,7 +1,8 @@
 "use client";
 import styles from "./page.module.css";
+import { motion, AnimatePresence } from "framer-motion";
 import ProjectGallery from "@/app/components/ProjectGallery";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Contact from "./components/Contact";
 import Bangs from "./components/Bangs";
 import VideoBackground from "./components/VideoBackground";
@@ -12,6 +13,9 @@ import Image from "next/image";
 export default function Home() {
   const [hoverVideo, setHoverVideo] = useState<string | null>(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
+
+  const [showVideo, setShowVideo] = useState(true);
+  const [isVisible, setIsVisible] = useState(false); // Controls display: none
 
   const handleAboutClick = () => {
     setIsAboutVisible((prev) => !prev);
@@ -24,6 +28,26 @@ export default function Home() {
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
 
+  useEffect(() => {
+    if (hoverVideo) {
+      setIsVisible(true);
+      setShowVideo(true);
+  
+      const fadeOutTimer = setTimeout(() => {
+        setShowVideo(false);
+      }, 2000);
+  
+      const hideTimer = setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
+  
+      return () => {
+        clearTimeout(fadeOutTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [hoverVideo]);
+
   return (
     <div className={styles.container}>
       <Loader duration={3000} />
@@ -32,20 +56,29 @@ export default function Home() {
       <Bangs isAboutVisible={isAboutVisible} handleAboutClick={handleAboutClick} />
       <div className={styles.mobileMenu}></div>
 
-      {hoverVideo && (
-        <div className={styles.videoBackground}>
-          <video
-            key={hoverVideo}
-            autoPlay
-            muted
-            loop
-            className={styles.hoverBackgroundVideo}
-          >
-            <source src={hoverVideo} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      )}
+        {hoverVideo && (
+          <AnimatePresence>
+            <div 
+              className={styles.FullscreenVideo}
+              style={{ display: isVisible ? "block" : "none" }} // Hides parent div when animation is done
+              >
+                <motion.video
+                  key={hoverVideo}
+                  autoPlay
+                  loop
+                  className={styles.videoElement}
+
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1, delay: 2 }}
+                >
+                  <source src={hoverVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </motion.video>
+            </div>
+          </AnimatePresence>
+        )}
 
       <section className={styles.main} id="main">
         <VideoBackground albumId="4677546" />

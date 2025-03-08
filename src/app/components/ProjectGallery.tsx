@@ -18,10 +18,6 @@ interface ProjectGalleryProps {
   setBackgroundVideo: (videoUrl: string | null) => void;
 }
 
-const isMobile = () => {
-  return /Mobi|Android/i.test(navigator.userAgent);
-};
-
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
@@ -76,7 +72,6 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
               onClick={() => openModal(video)}
             >
               {video.name}
-              {index !== videos.length - 1 ? " " : ""}
             </motion.span>
           );
         })}
