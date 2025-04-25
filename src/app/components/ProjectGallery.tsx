@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import styles from "./ProjectGallery.module.css";
 import Project from "./Project";
@@ -21,37 +22,46 @@ interface ProjectGalleryProps {
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  
-  useEffect(() => {  
+
+  const lastBgRef = useRef<string | null>(null);
+
+  useEffect(() => {
     fetch("/api/vimeo")
       .then((response) => response.json())
       .then((data) => {
-  
         if (!Array.isArray(data)) {
           console.error("Error: Expected an array but got:", data);
           return;
         }
-  
         setVideos(data);
       })
       .catch((error) => console.error("Error fetching videos:", error));
   }, []);
 
-  const handleMouseEnter = (videoUrl: string | null) => {
-    setBackgroundVideo(videoUrl);
-  };
+  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const handleMouseLeave = () => {
-    setBackgroundVideo(null);
-  };
+  const handlePointerEnter = useCallback((videoUrl: string | null) => {
+    clearTimeout(hoverTimeout.current!);
+    hoverTimeout.current = setTimeout(() => {
+      if (lastBgRef.current !== videoUrl) {
+        setBackgroundVideo(videoUrl);
+        lastBgRef.current = videoUrl;
+      }
+    }, 120);
+  }, [setBackgroundVideo]);
 
-  const openModal = (video: Video) => {
-    setSelectedVideo(video);
-  };
+  const handlePointerLeave = useCallback(() => {
+    clearTimeout(hoverTimeout.current!);
+    if (lastBgRef.current !== null) {
+      setBackgroundVideo(null);
+      lastBgRef.current = null;
+    }
+  }, [setBackgroundVideo]);
 
+  const openModal = (video: Video) => setSelectedVideo(video);
   const closeModal = () => {
     setSelectedVideo(null);
-    setBackgroundVideo(null);
+    handlePointerLeave();
   };
 
   return (
@@ -62,17 +72,17 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
 
           return (
             <motion.span
-              key={video.id}
-              className={styles.videoTitle}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              onMouseEnter={() => handleMouseEnter(videoUrl)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => openModal(video)}
-            >
-              {video.name}
-            </motion.span>
+            key={video.id}
+            className={styles.videoTitle}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+            onPointerEnter={() => handlePointerEnter(videoUrl)}
+            onPointerLeave={handlePointerLeave}
+            onClick={() => openModal(video)}
+          >
+            {video.name}
+          </motion.span>
           );
         })}
       </div>

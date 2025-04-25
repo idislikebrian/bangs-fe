@@ -15,7 +15,7 @@ export default function Home() {
   const [isAboutVisible, setIsAboutVisible] = useState(false);
 
   const [showVideo, setShowVideo] = useState(true);
-  const [isVisible, setIsVisible] = useState(false); // Controls display: none
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleAboutClick = () => {
     setIsAboutVisible((prev) => !prev);
@@ -59,8 +59,8 @@ export default function Home() {
         {hoverVideo && (
           <AnimatePresence>
             <div 
-              className={styles.FullscreenVideo}
-              style={{ display: isVisible ? "block" : "none" }} // Hides parent div when animation is done
+              className={styles.videoBackground}
+              style={{ display: isVisible ? "block" : "none" }} 
               >
                 <motion.video
                   key={hoverVideo}
@@ -133,7 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      <About isVisible={isAboutVisible} /> {/* Pass the visibility state */}
+      <About isVisible={isAboutVisible} />
     </div>
   );
 }

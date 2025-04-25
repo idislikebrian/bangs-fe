@@ -25,13 +25,6 @@ const About = ({ isVisible }: { isVisible: boolean }) => {
       initial={{ y: "100vh" }}
       animate={{ y: isVisible ? 0 : "100vh" }} 
       transition={{ type: "spring", stiffness: 30 }}
-      style={{ 
-        position: "absolute", 
-        left: 0, 
-        width: "100vw", 
-        height: "100vh",
-        overflow: "hidden",
-     }}
     >
       <div className={styles.mobileMenu}></div>
 

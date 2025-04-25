@@ -68,6 +68,9 @@
 }
 
 .videoBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -86,8 +89,14 @@
   z-index: 9999;
 }
 
+.FullscreenVideo,
+.FullscreenVideo video {
+  pointer-events: none; 
+}
+
 .videoElement {
-  max-width: 100vw;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 .tagJuice, .thirdJuice {
