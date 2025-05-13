@@ -71,7 +71,7 @@ export default function Home() {
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 1, delay: 2 }}
+                  transition={{ duration: 0.3, delay: 2 }}
                 >
                   <source src={hoverVideo} type="video/mp4" />
                   Your browser does not support the video tag.
