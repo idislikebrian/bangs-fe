@@ -12,6 +12,7 @@ import Image from "next/image";
 
 export default function Home() {
   const [hoverVideo, setHoverVideo] = useState<string | null>(null);
+  const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
 
   const [showVideo, setShowVideo] = useState(true);
@@ -28,25 +29,30 @@ export default function Home() {
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
 
+  const handleBackgroundVideo = (videoUrl: string | null, duration?: number) => {
+    setHoverVideo(videoUrl);
+    setVideoDuration(duration || null);
+  };
+
   useEffect(() => {
     if (hoverVideo) {
       setIsVisible(true);
       setShowVideo(true);
-  
-      const fadeOutTimer = setTimeout(() => {
+
+      // Use video duration or fallback to 30 seconds
+      const duration = (videoDuration || 30) * 1000; // Convert to milliseconds
+
+      const timer = setTimeout(() => {
         setShowVideo(false);
-      }, 2000);
-  
-      const hideTimer = setTimeout(() => {
         setIsVisible(false);
-      }, 3000);
-  
+        setHoverVideo(null);
+      }, duration);
+
       return () => {
-        clearTimeout(fadeOutTimer);
-        clearTimeout(hideTimer);
+        clearTimeout(timer);
       };
     }
-  }, [hoverVideo]);
+  }, [hoverVideo, videoDuration]);
 
   return (
     <div className={styles.container}>
@@ -69,9 +75,9 @@ export default function Home() {
                   className={styles.videoElement}
 
                   initial={{ opacity: 1 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: showVideo ? 1 : 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: 2 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <source src={hoverVideo} type="video/mp4" />
                   Your browser does not support the video tag.
@@ -85,7 +91,7 @@ export default function Home() {
 
         <div className={styles.logo}>BANGS</div>
         <div className={styles.clients}>
-          <ProjectGallery setBackgroundVideo={setHoverVideo} />
+          <ProjectGallery setBackgroundVideo={handleBackgroundVideo} />
         </div>
         <div className={styles.arrowHome}>
             <center>

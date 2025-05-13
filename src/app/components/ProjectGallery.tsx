@@ -13,10 +13,11 @@ interface Video {
   id: string;
   name: string;
   files: VideoFile[];
+  duration: number;
 }
 
 interface ProjectGalleryProps {
-  setBackgroundVideo: (videoUrl: string | null) => void;
+  setBackgroundVideo: (videoUrl: string | null, duration?: number) => void;
 }
 
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) => {
@@ -40,11 +41,11 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
 
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const handlePointerEnter = useCallback((videoUrl: string | null) => {
+  const handlePointerEnter = useCallback((videoUrl: string | null, duration?: number) => {
     clearTimeout(hoverTimeout.current!);
     hoverTimeout.current = setTimeout(() => {
       if (lastBgRef.current !== videoUrl) {
-        setBackgroundVideo(videoUrl);
+        setBackgroundVideo(videoUrl, duration);
         lastBgRef.current = videoUrl;
       }
     }, 120);
@@ -69,20 +70,21 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
       <div className={styles.videoSentence}>
         {videos.map((video, index) => {
           const videoUrl = video.files[0]?.link || null;
+          const duration = video.duration;
 
           return (
             <motion.span
-            key={video.id}
-            className={styles.videoTitle}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            onPointerEnter={() => handlePointerEnter(videoUrl)}
-            onPointerLeave={handlePointerLeave}
-            onClick={() => openModal(video)}
-          >
-            {video.name}
-          </motion.span>
+              key={video.id}
+              className={styles.videoTitle}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              onPointerEnter={() => handlePointerEnter(videoUrl, duration)}
+              onPointerLeave={handlePointerLeave}
+              onClick={() => openModal(video)}
+            >
+              {video.name}
+            </motion.span>
           );
         })}
       </div>
