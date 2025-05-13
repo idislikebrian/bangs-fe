@@ -42,28 +42,40 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handlePointerEnter = useCallback((videoUrl: string | null, duration?: number) => {
-    clearTimeout(hoverTimeout.current!);
-    hoverTimeout.current = setTimeout(() => {
-      if (lastBgRef.current !== videoUrl) {
-        setBackgroundVideo(videoUrl, duration);
-        lastBgRef.current = videoUrl;
-      }
-    }, 120);
-  }, [setBackgroundVideo]);
-
-  const handlePointerLeave = useCallback(() => {
-    clearTimeout(hoverTimeout.current!);
-    if (lastBgRef.current !== null) {
-      setBackgroundVideo(null);
-      lastBgRef.current = null;
+    // Only handle hover effects on non-touch devices
+    if (window.matchMedia('(hover: hover)').matches) {
+      clearTimeout(hoverTimeout.current!);
+      hoverTimeout.current = setTimeout(() => {
+        if (lastBgRef.current !== videoUrl) {
+          setBackgroundVideo(videoUrl, duration);
+          lastBgRef.current = videoUrl;
+        }
+      }, 120);
     }
   }, [setBackgroundVideo]);
 
-  const openModal = (video: Video) => setSelectedVideo(video);
-  const closeModal = () => {
+  const handlePointerLeave = useCallback(() => {
+    // Only handle hover effects on non-touch devices
+    if (window.matchMedia('(hover: hover)').matches) {
+      clearTimeout(hoverTimeout.current!);
+      if (lastBgRef.current !== null) {
+        setBackgroundVideo(null);
+        lastBgRef.current = null;
+      }
+    }
+  }, [setBackgroundVideo]);
+
+  const openModal = useCallback((video: Video) => {
+    setSelectedVideo(video);
+    // Clear background video when opening modal
+    setBackgroundVideo(null);
+    lastBgRef.current = null;
+  }, [setBackgroundVideo]);
+
+  const closeModal = useCallback(() => {
     setSelectedVideo(null);
     handlePointerLeave();
-  };
+  }, [handlePointerLeave]);
 
   return (
     <div className={styles.root}>
@@ -82,6 +94,13 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ setBackgroundVideo }) =
               onPointerEnter={() => handlePointerEnter(videoUrl, duration)}
               onPointerLeave={handlePointerLeave}
               onClick={() => openModal(video)}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  openModal(video);
+                }
+              }}
             >
               {video.name}
             </motion.span>

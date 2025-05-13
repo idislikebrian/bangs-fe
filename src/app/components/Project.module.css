@@ -33,9 +33,6 @@
         background: none;
     }
 
-    .vimeoPlayer {
-        display: none;
-    }
 }
 
 @media (max-height: 600px) and (min-width: 600px) {
